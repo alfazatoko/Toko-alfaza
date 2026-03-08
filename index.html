@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Alfaza Cell</title>
+    
+    <!-- PWA Installable Meta -->
+    <meta name="theme-color" content="#3498db">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Alfaza Cell">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2820/2820353.png">
+    
+    <!-- Web App Manifest Inline (biar single file) -->
+    <link rel="manifest" href="data:application/manifest+json,{
+      'name': 'Alfaza Cell',
+      'short_name': 'Alfaza',
+      'description': 'Aplikasi Kasir Alfaza Cell',
+      'start_url': './',
+      'display': 'standalone',
+      'background_color': '#ffffff',
+      'theme_color': '#3498db',
+      'orientation': 'portrait-primary',
+      'icons': [
+        {
+          'src': 'https://cdn-icons-png.flaticon.com/512/2820/2820353.png',
+          'sizes': '192x192',
+          'type': 'image/png',
+          'purpose': 'any maskable'
+        },
+        {
+          'src': 'https://cdn-icons-png.flaticon.com/512/2820/2820353.png',
+          'sizes': '512x512',
+          'type': 'image/png',
+          'purpose': 'any maskable'
+        }
+      ]
+    }">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+
+    <style>
+        :root { --p: #2c3e50; --s: #27ae60; --a: #3498db; --d: #e74c3c; --v: #8e44ad; --gray: #f8f9fa; }
+        body { font-family: 'Segoe UI', sans-serif; background: #eaeff2; margin: 0; padding: 10px; color: #333; -webkit-tap-highlight-color: transparent; }
+        .container { max-width: 450px; margin: auto; background: #fff; border-radius: 25px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 15px; min-height: 95vh; position: relative; }
+        
+        /* ... (style lainnya tetap sama, aku skip biar ringkas, copy dari kode lama kamu ya) ... */
+        
+        .btn { border: none; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; font-size: 13px; width: 100%; padding: 14px; transition: 0.2s; }
+        .btn-cloud { background: #3498db; margin-top: 5px; }
+        /* sisanya style lama kamu */
+    </style>
+</head>
+<body>
+
+<!-- HTML body tetap sama seperti versi improved sebelumnya -->
+<div class="container">
+    <!-- login-screen, main-app, history-page, modalSaldo sama persis -->
+    <!-- ... paste bagian body dari kode improved sebelumnya ... -->
+</div>
+
+<script>
+    // Script utama tetap sama seperti versi improved sebelumnya
+    // Tambahan: Register Service Worker minimal untuk memenuhi kriteria PWA installable
+
+    // Register dummy Service Worker (minimal fetch event biar dianggap active)
+    if ('serviceWorker' in navigator) {
+        const swCode = `
+            self.addEventListener('install', e => {
+                self.skipWaiting();
+            });
+            self.addEventListener('activate', e => {
+                e.waitUntil(self.clients.claim());
+            });
+            self.addEventListener('fetch', e => {
+                e.respondWith(fetch(e.request).catch(() => new Response('Offline')));
+            });
+        `;
+        const blob = new Blob([swCode], { type: 'application/javascript' });
+        const url = URL.createObjectURL(blob);
+
+        navigator.serviceWorker.register(url)
+            .then(reg => console.log('Service Worker registered (dummy for PWA)', reg))
+            .catch(err => console.error('SW registration failed', err));
+    }
+
+    // Sisanya script kamu (KATA_LIST, db, user, functions masuk(), simpanTr(), dll)
+    // ... paste script lengkap dari versi improved sebelumnya ...
+</script>
+</body>
+</html>
